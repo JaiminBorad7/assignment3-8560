@@ -1,0 +1,30 @@
+
+<section style="min-height: 70vh; padding: 100px 0" class="py-5 container">
+  <div class="row">
+    {{#each properties}}
+      <div class="col col-sm-6 col-md-3 w-100 my-4" style="max-width: 300px;margin: 16px 0">
+        <div class="properties">
+          <div style="position: relative;" class="image-holder">
+            <img src="{{this.coverImage}}" class="img-responsive" alt="properties"/>
+            {{#if (eq this.status "Sold")}}
+              <div style="position: absolute; width:200px; left:15%; top:6%">
+                <img style="width: 100%;height:auto" src="/images/sold.png">
+              </div>
+            {{/if}}
+            <div class="status new">{{this.status}}</div>
+          </div>
+          <h4><a href="#">{{this.title}}</a></h4>
+          <p class="price">Price: ${{this.price}}</p>
+            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">{{this.specification.bedroom}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">{{this.specification.livingroom}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">{{this.specification.kitchen}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">{{this.specification.bathroom}}</span> 
+          </div>
+          <a class="btn btn-primary " href="/property/{{this._id}}">View Details</a>
+        </div>
+      </div>
+      {{else}}
+      <h2 style="margin-top: 200px;" class="text-center">No property Bought</h2>
+    {{/each}}
+  </div>
+</section>

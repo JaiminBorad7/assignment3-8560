@@ -1,0 +1,111 @@
+<section style="padding: 100px 0;" class="py-5 container">
+  {{#each property}}
+    <form action="/property/update" method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="id" value="{{this._id}}" class="form-control form-control-lg" />
+    <input type="hidden" name="addedBy" value="{{user._id}}" class="form-control form-control-lg" />
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Title</label>
+      <input type="text" value="{{this.title}}" name="title" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Price</label>
+      <input type="number" value="{{this.price}}" min="0" step="0.01" name="price" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Street</label>
+      <input type="text" value="{{this.location.street}}" name="street" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-group">
+      <label>Select City</label>
+      <select id="cities" class="form-control" name="city">
+        
+      </select>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Pin</label>
+      <input type="text" value="{{this.location.pin}}" name="pin" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Bedrooms</label>
+      <input type="number" value="{{this.specification.bedroom}}" min="1" step="1" name="bedroom" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Livingrooms</label>
+      <input type="number" value="{{this.specification.livingroom}}" min="1" step="1" name="livingroom" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Kitchens</label>
+      <input type="number" value="{{this.specification.kitchen}}" min="1" step="1" name="kitchen" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label">Bathrooms</label>
+      <input type="number" value="{{this.specification.bathroom}}" min="1" step="1" name="bathroom" class="form-control form-control-lg" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea name="description" class="form-control" id="description" rows="3">
+        {{this.description}}
+      </textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Property Type</label>
+      <select id="type" class="form-control" name="type">
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="coverImage">Property Image (If omitted previous image will be persisted) </label>
+      <input name="coverImage" type="file" class="form-control-file" id="coverImage">
+    </div>
+
+    <!-- Submit button -->
+    <input type="submit" value="Update" class="btn btn-primary btn-lg btn-block">
+
+  </form>
+  {{/each}}
+</section>
+
+<script>
+  let cities = "{{cities}}";
+  const city = "{{city}}";
+  const type = "{{type}}";
+
+  if(cities) {
+    cities = cities.split(',');
+    const selectCities = document.getElementById("cities");
+    let html = '';
+    cities.forEach((c) => {
+      if(c === city) {
+        html += `<option selected>${c}</option>`
+      } else {
+        html += `<option>${c}</option>`
+      }
+    })
+    selectCities.innerHTML = html;
+  }
+
+  if(type) {
+    const types = ["Appartment", "Building", "Office Space"];
+    let html = ``;
+    types.forEach((t) => {
+      if(t === type) {
+        html += `<option selected>${t}</option>`;
+      } else {
+        html += `<option>${t}</option>`;
+      }
+    })
+    document.getElementById("type").innerHTML = html;
+  }
+</script>

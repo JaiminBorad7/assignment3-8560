@@ -1,0 +1,96 @@
+<section style="padding: 100px 0; min-height: 70vh" class="container">
+  {{#each property}}
+    <div class="row">
+      <div style="position: relative;" class="col-md-6">
+        <img src="{{this.coverImage}}" class="img-responsive" alt="properties"/>
+        {{#if (eq this.status "Sold")}}
+          <div style="position: absolute; width:300px; left:25%; top:15%">
+            <img style="width: 100%;height:auto" src="/images/sold.png">
+          </div>
+        {{/if}}
+      </div>
+      <div class="col-md-6">
+        <h3>{{this.title}}</h3>
+        <h4>Price: {{this.price}}</h4>
+        <h4>Status: {{this.status}}</h4>
+        <div style="display: flex;">
+          <h4>Bedrooms: {{this.specification.bedroom}}</h4>
+          <span style="margin: 8px;"> | </span>
+          <h4>Livingrooms: {{this.specification.livingroom}}</h4>
+        </div>
+        <div style="display: flex;">
+          <h4>Kitchens: {{this.specification.kitchen}}</h4>
+          <span style="margin: 8px;"> | </span>
+          <h4>Bathrooms: {{this.specification.bathroom}}</h4>
+        </div>
+        <h4>City: {{this.location.city}}</h4>
+        <h4>Street: {{this.location.street}}</h4>
+        <h4>Pin: {{this.location.pin}}</h4>
+      </div>
+  </div>
+  {{/each}}
+
+  <div style="margin-top: 24px">
+    {{#each listedBy}}
+      <h2 style="color: black">Listed By: {{this.username}}</h2>
+    {{/each}}
+    {{#each description}}
+      <h3>{{this}}</h3>
+    {{/each}}
+
+    {{#if (eq status "New")}}
+      <button style="padding: 8px; max-width:320px;margin-top: 24px" class="btn-primary w-100" data-toggle="modal" data-target="#myModal">
+        Buy Now
+      </button>
+    {{else}}
+      {{#each property}}
+        <h1 style="margin-top: 40px;color: black">Sold For: {{this.totalPayableAmount}}</h1>
+      {{/each}}
+    {{/if}}
+
+    <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div style="display: flex;justify-content:space-between">
+          <h4 class="modal-title">Buy Property</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+      </div>
+
+      <!-- Modal body -->
+      {{#each property}}
+        <div class="modal-body">
+          <div style="display:flex;justify-content:space-between">
+            <h4 id="base-price" data-value="{{this.price}}">Base Price($):</h4>
+            <h4 style="font-weight: bold;">{{this.price}}</h4>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <h4 id="tax" data-value="{{this.tax}}">Tax ($)|3%:</h4>
+            <h4 style="font-weight: bold;">{{this.tax}}</h4>
+          </div>
+          {{#if (eq this.agentCharges 0)}}
+          <div />
+          {{else}}
+          <div style="display:flex;justify-content:space-between">
+            <h4 id="agent-charge" data-value="{{this.agentCharges}}">Agent Commision($)|1%:</h4>
+            <h4 style="font-weight: bold;">{{this.agentCharges}}</h4>
+          </div>
+          {{/if}}
+          <h3 style="margin-top: 24px;text-align:center">Total Payable Amount($): {{this.totalPayableAmount}}</h3>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <form method="POST" action="/payments">
+            <input type="hidden" name="id" value="{{this._id}}" />
+            <input type="hidden" name="totalAmount" value="{{this.totalPayableAmount}}" />
+            <button id="payment" class="btn btn-primary">Make Payment</button>
+          </form>
+        </div>
+      {{/each}}
+  </div>
+  </div>
+</section>

@@ -1,0 +1,166 @@
+<div class="">
+      <div id="slider" class="sl-slider-wrapper">
+
+        <div class="sl-slider">
+
+          {{#each properties}}
+            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+              <div class="sl-slide-inner">
+                <div style="background-image: url({{this.coverImage}});" class="bg-img"></div>
+                <h2><a href="/property/{{this._id}}">{{this.title}}</a></h2>
+                <blockquote>              
+                <p class="location"><span class="glyphicon glyphicon-map-marker"></span> {{this.location.street}}, {{this.location.city}}</p>
+                <cite>$ {{this.price}}</cite>
+                </blockquote>
+              </div>
+            </div>
+          {{/each}}
+        
+          
+        </div><!-- /sl-slider -->
+
+
+
+        <nav id="nav-dots" class="nav-dots">
+          {{!-- <span class="nav-dot-current"></span> --}}
+          {{#each properties}}
+            <span></span>
+          {{/each}}
+        </nav>
+
+      </div><!-- /slider-wrapper -->
+</div>
+
+
+{{!-- Search --}}
+<div class="banner-search py-3">
+  <div class="container"> 
+    <!-- banner -->
+    <h3>Search by Price, BHK, Location, Type</h3>
+    <div class="searchbar">
+      <div class="row">
+        <form action="/property" method="GET" class="col-lg-6 col-sm-6">
+          <input type="text" name="search" class="form-control" placeholder="Search by Title, Street, City, Description">
+          <div class="row">
+            <div class="col-lg-3 col-sm-3 ">
+              <select name="status" class="form-control">
+                <option>Any</option>
+                <option>New</option>
+                <option>Sold</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <select name="price" class="form-control">
+                <option>Price</option>
+                <option>$150000 - $200000</option>
+                <option>$200000 - $250000</option>
+                <option>$250000 - $300000</option>
+                <option>$300000 - above</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <select name="type" class="form-control">
+                  <option>Property</option>
+                  <option>Apartment</option>
+                  <option>Building</option>
+                  <option>Office Space</option>
+              </select>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <select name="city" class="form-control">
+                  <option>City</option>
+                  {{#each cities}}
+                    <option>{{this}}</option>
+                  {{/each}}
+              </select>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <div class="form-outline mb-4">
+                <label class="form-label">Bedrooms</label>
+                <div class="d-flex flex-col">
+                  <input class="form-control form-control-sm" type="number" placeholder="min" name="minBedrooms" min="1" value="1" />
+                  <input class="form-control form-control-sm" type="number" placeholder="max" name="maxBedrooms" min="1" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <div class="form-outline mb-4">
+                <label class="form-label">Living Rooms</label>
+                <div class="d-flex flex-col">
+                  <input class="form-control form-control-sm" type="number" placeholder="min" name="minLivingrooms" min="1" value="1" />
+                  <input class="form-control form-control-sm" type="number" placeholder="max" name="maxLivingrooms" min="1" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <div class="form-outline mb-4">
+                <label class="form-label">Kitchens</label>
+                <div class="d-flex flex-col">
+                  <input class="form-control form-control-sm" type="number" placeholder="min" name="minKitchens" min="1" value="1" />
+                  <input class="form-control form-control-sm" type="number" placeholder="max" name="maxKitchens" min="1" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <div class="form-outline mb-4">
+                <label class="form-label">Bathrooms</label>
+                <div class="d-flex flex-col">
+                  <input class="form-control form-control-sm" type="number" placeholder="min" name="minBathrooms" min="1" value="1" />
+                  <input class="form-control form-control-sm" type="number" placeholder="max" name="maxBathrooms" min="1" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-sm-4">
+              <button type="submit" class="btn btn-success">Find Now</button>
+            </div>
+          </div>
+        </form>
+        <div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
+            <p>Buy your dream property.</p>
+            <a href="/property">
+              <button class="btn btn-info">Explore</button>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- banner -->
+<div class="container">
+  <div class="properties-listing spacer"> <a href="/property" class="pull-right viewall">View All Listing</a>
+    <h2>Featured Properties</h2>
+    <div id="owl-example" class="owl-carousel">
+      {{#each properties}}
+        <div class="properties">
+          <div style="position: relative;" class="image-holder">
+            <img src="{{this.coverImage}}" class="img-responsive" alt="properties"/>
+            {{#if (eq this.status "Sold")}}
+              <div style="position: absolute; width:100px; left:15%; top:6%">
+                <img style="width: 100%;height:auto" src="/images/sold.png">
+              </div>
+            {{/if}}
+            <div class="status new">{{this.status}}</div>
+          </div>
+          <h4 style="white-space: nowrap;"><a href="/property/{{this._id}}">{{this.title}}</a></h4>
+          <p class="price">Price: ${{this.price}}</p>
+            <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">{{this.specification.bedroom}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">{{this.specification.livingroom}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">{{this.specification.kitchen}}</span> 
+            <span data-toggle="tooltip" data-placement="bottom" data-original-title="Bathroom">{{this.specification.bathroom}}</span> 
+          </div>
+          <a class="btn btn-primary " href="/property/{{this._id}}">View Details</a>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="spacer">
+    <div class="row">
+      <div class="col-lg-6 col-sm-9 recent-view">
+        <h3>About Us</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.<br><a href="#">Learn More</a></p>
+      
+      </div>
+     </div>
+    </div>
+  </div>
+</div>
