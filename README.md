@@ -6,3 +6,4 @@ How to run the project
 to run the project you just have to run the simple command : node index.js and this command will run the project and open your browser in localhost:3000 and this will run the project.
 
 version 2 readme update
+version 3 readme update
