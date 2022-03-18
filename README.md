@@ -7,3 +7,4 @@ to run the project you just have to run the simple command : node index.js and t
 
 version 2 readme update
 version 3 readme update
+edit done with local machine
